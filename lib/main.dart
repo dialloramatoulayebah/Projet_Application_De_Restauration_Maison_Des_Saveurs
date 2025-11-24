@@ -16,15 +16,29 @@ class _MyWidgetState extends State<MyWidget> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: const Text("MaisonDesSaveurs")),
+        appBar: AppBar(
+          title: const Text(
+            "MaisonDesSaveurs",
+            style: TextStyle(
+              color: Colors.green,
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.bold,
+              fontStyle: FontStyle.italic,
+            ),
+          ),
+        ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset("asset/images/Logo.jpeg"),
+              Image.asset("assets/images/Logo.jpeg", width: 200, height: 200),
               Text(
                 "Bienvenue à la Maison des Saveurs!",
-                style: TextStyle(fontSize: 20, fontFamily: 'Arial'),
+                style: TextStyle(
+                  fontSize: 20,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           ),
