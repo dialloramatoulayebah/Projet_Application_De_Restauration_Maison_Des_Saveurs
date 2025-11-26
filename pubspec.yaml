@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  font_awesome_flutter: ^10.7.0
+  url_launcher: ^6.3.0
 
 dev_dependencies:
   flutter_test:
@@ -17,9 +19,11 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
   fonts:
     - family: Poppins
       fonts:
         - asset: assets/fonts/Poppins/Poppins-Bold.ttf
+
   assets:
     - assets/images/Logo.jpeg
