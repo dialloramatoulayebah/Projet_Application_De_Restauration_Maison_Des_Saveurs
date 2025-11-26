@@ -1,8 +1,7 @@
+import 'package:app_de_restauration_maison_des_saveurs/Pages/menu.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'menu.dart';
 
 //import 'Icon.dart';
 
@@ -84,7 +83,7 @@ class AccueilPage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Menu()),
+                  MaterialPageRoute(builder: (context) => PageMenu()),
                 );
               },
               child: const Text("Aller au Menu"),
