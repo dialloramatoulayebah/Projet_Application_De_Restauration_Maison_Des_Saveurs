@@ -25,9 +25,9 @@ class AccueilPage extends StatelessWidget {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // 🟢 Image de fond
+          //  Image de fond
           Image.asset("assets/images/accueil_1.jpeg", fit: BoxFit.cover),
-          // 🟢 Contenu au-dessus de l'image
+          //  Contenu au-dessus de l'image
           SingleChildScrollView(
             child: Center(
               child: Column(
@@ -40,7 +40,6 @@ class AccueilPage extends StatelessWidget {
                     width: 200,
                     height: 200,
                   ),
-
                   const SizedBox(height: 20),
 
                   const Text(
