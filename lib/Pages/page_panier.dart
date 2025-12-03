@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'pannier.dart';
+import 'panier.dart';
 import 'payment.dart';
 
 class PagePanier extends StatefulWidget {
@@ -14,15 +14,15 @@ class _PagePanierState extends State<PagePanier> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Mon Panier")),
-      body: Pannier.items.isEmpty
+      body: Panier.items.isEmpty
           ? Center(child: Text("Votre panier est vide"))
           : Column(
               children: [
                 Expanded(
                   child: ListView.builder(
-                    itemCount: Pannier.items.length,
+                    itemCount: Panier.items.length,
                     itemBuilder: (context, index) {
-                      final produit = Pannier.items[index];
+                      final produit = Panier.items[index];
                       return ListTile(
                         leading: Icon(Icons.shopping_cart),
                         title: Text(produit.nom),
@@ -31,7 +31,7 @@ class _PagePanierState extends State<PagePanier> {
                           icon: Icon(Icons.delete),
                           onPressed: () {
                             setState(() {
-                              Pannier.remove(produit);
+                              Panier.remove(produit);
                             });
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
@@ -48,12 +48,12 @@ class _PagePanierState extends State<PagePanier> {
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     children: [
-                      Text("Total : ${Pannier.total()} \$",
+                      Text("Total : ${Panier.total()} \$",
                           style: TextStyle(
                               fontSize: 22, fontWeight: FontWeight.bold)),
                       SizedBox(height: 15),
                       ElevatedButton(
-                        onPressed: Pannier.items.isEmpty
+                        onPressed: Panier.items.isEmpty
                             ? null
                             : () {
                                 Navigator.push(

@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
 
 import 'detail_menu.dart';
-import 'page_pannier.dart';
-import 'pannier.dart';
+import 'page_panier.dart';
+import 'panier.dart';
 import 'produit.dart';
 
 class ListProduits extends StatelessWidget {
   ListProduits({super.key});
 
-  final List<Produit> produits = [
-    Produit(
+  final List<Salade> produits = [
+    Salade(
       nom: "Salade César",
       description: "Salade fraîche avec poulet grillé et parmesan.",
       prix: 12.0,
       image: "assets/images/salades/saladesoeufs.jpeg",
     ),
-    Produit(
+    Salade(
       nom: "Salade Fruits",
       description: "Mélange de fruits frais.",
       prix: 9.0,
       image: "assets/images/salades/Saladelegumes.jpg",
     ),
-    Produit(
+    Salade(
       nom: "Salade Créole",
       description: "Salade épicée façon créole.",
       prix: 14.0,
       image: "assets/images/salades/salades3.jpg",
     ),
-    Produit(
+    Salade(
       nom: "Salade poulet braisé",
       description: "Salade épicée façon créole.",
       prix: 7.0,
@@ -59,7 +59,7 @@ class ListProduits extends StatelessWidget {
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4,
             crossAxisSpacing: 9,
-            mainAxisSpacing: 12,
+            mainAxisSpacing: 20,
             mainAxisExtent: 300,
             //childAspectRatio: 0.7,
           ),
@@ -102,7 +102,7 @@ class ListProduits extends StatelessWidget {
                   IconButton(
                     icon: const Icon(Icons.add_shopping_cart),
                     onPressed: () {
-                      Pannier.add(produit);
+                      Panier.add(produit);
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text("${produit.nom} ajouté au panier"),

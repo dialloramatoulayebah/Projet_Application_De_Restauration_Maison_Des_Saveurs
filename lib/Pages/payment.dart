@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'pannier.dart';
+import 'panier.dart';
 
 class PagePaiement extends StatefulWidget {
   const PagePaiement({super.key});
@@ -22,7 +22,7 @@ class _PagePaiementState extends State<PagePaiement> {
           children: [
             Text("Montant à payer :",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Text("${Pannier.total()} \$",
+            Text("${Panier.total()} \$",
                 style: TextStyle(fontSize: 22, color: Colors.green)),
             SizedBox(height: 25),
             Text("Méthode de paiement",
@@ -60,7 +60,7 @@ class _PagePaiementState extends State<PagePaiement> {
                             actions: [
                               TextButton(
                                 onPressed: () {
-                                  Pannier.clear();
+                                  Panier.clear();
                                   Navigator.popUntil(context, (r) => r.isFirst);
                                 },
                                 child: Text("OK"),
