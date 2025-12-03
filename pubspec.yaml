@@ -27,4 +27,6 @@ flutter:
 
   assets:
     - assets/images/
-   
+    - assets/images/Boisson/
+    - assets/images/Repas/
+    - assets/images/salades/
