@@ -27,6 +27,12 @@ class ListProduits extends StatelessWidget {
       prix: 14.0,
       image: "assets/images/salades/salades3.jpg",
     ),
+    Produit(
+      nom: "Salade poulet braisé",
+      description: "Salade épicée façon créole.",
+      prix: 7.0,
+      image: "assets/images/salades/salades12.jpg",
+    ),
   ];
 
   @override
@@ -53,8 +59,9 @@ class ListProduits extends StatelessWidget {
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4,
             crossAxisSpacing: 9,
-            mainAxisSpacing: 15,
-            childAspectRatio: 0.7,
+            mainAxisSpacing: 12,
+            mainAxisExtent: 300,
+            //childAspectRatio: 0.7,
           ),
           itemBuilder: (context, index) {
             final produit = produits[index];
@@ -75,7 +82,7 @@ class ListProduits extends StatelessWidget {
                       child: Image.asset(produit.image, fit: BoxFit.cover),
                     ),
                   ),
-                  const SizedBox(height: 6),
+                const SizedBox(height: 6),
                   Text(
                     produit.nom,
                     textAlign: TextAlign.center,
