@@ -3,7 +3,7 @@ import 'produit.dart';
 class Panier {
   static final List<Salade> items = [];
 
-  static void add(Salade s) => items.add(s);
+  static void a(Salade s) => items.add(s);
 
   static void remove(Salade s) => items.remove(s);
 
