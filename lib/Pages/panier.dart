@@ -1,13 +1,13 @@
 import 'produit.dart';
 
 class Panier {
-  static final List<Salade> items = [];
+  static final List<Produit> items = [];
 
-  static void a(Salade s) => items.add(s);
+  static void add(Produit p) => items.add(p);
 
-  static void remove(Salade s) => items.remove(s);
+  static void remove(Produit p) => items.remove(p);
 
-  static double total() => items.fold(0, (sum, s) => sum + s.prix);
+  static double total() => items.fold(0, (sum, p) => sum + p.prix);
 
   static void clear() => items.clear();
 }

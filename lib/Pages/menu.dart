@@ -34,62 +34,25 @@ class ListProduits extends StatelessWidget {
       image: "assets/images/salades/salades12.jpg",
     ),
   ];
+
   final List<Repas> repas = [
     Repas(
       nom: "Alloco Poisson",
-      description:
-          "Poisson grillé accompagné d’alloco (bananes plantains frites), servi avec une petite sauce maison.",
+      description: "Poisson grillé accompagné d’alloco.",
       prix: 18.00,
       image: "assets/images/Repas/allocopoisson.jpeg",
     ),
     Repas(
       nom: "Attiéké Poisson",
-      description:
-          "Attiéké ivoirien accompagné d’un poisson braisé, tomate, oignon, piment et sauce verte traditionnelle.",
+      description: "Attiéké ivoirien et poisson braisé.",
       prix: 17.00,
       image: "assets/images/Repas/attiekepoisssson.jpg",
     ),
     Repas(
       nom: "Tajine Marocain aux Pruneaux",
-      description:
-          "Tajine marocain traditionnel à la viande, pruneaux, amandes et épices orientales.",
+      description: "Tajine marocain traditionnel.",
       prix: 20.00,
       image: "assets/images/Repas/tajine-marocain-aux-pruneaux.jpg",
-    ),
-    Repas(
-      nom: "Tajine Marocain Traditionnel",
-      description:
-          "Tajine aux légumes variés, épices marocaines et viande tendre cuite lentement.",
-      prix: 18.00,
-      image: "assets/images/Repas/salades12.jpg",
-    ),
-    Repas(
-      nom: "Brochettes Grillées",
-      description:
-          "Brochettes de viande marinée, grillées au feu et servies avec une sauce épicée.",
-      prix: 15.00,
-      image: "assets/images/Repas/Brochette.jpeg",
-    ),
-    Repas(
-      nom: "Riz Sauce Arachide",
-      description:
-          "Riz blanc accompagné d’une sauce onctueuse à base d’arachide et de viande mijotée.",
-      prix: 14.00,
-      image: "assets/images/Repas/rizsaucearachide.jpeg",
-    ),
-    Repas(
-      nom: "chièp (Thieboudienne)",
-      description:
-          "Riz sénégalais parfumé, servi avec poisson, carottes, chou et légumes mijotés.",
-      prix: 19.00,
-      image: "assets/images/Repas/Tchiep.jpg",
-    ),
-    Repas(
-      nom: "Salade poulet braisé",
-      description:
-          "Soupe ou ragoût nourrissant à base de pois chiches, de couscous perlé (Maftoul), de carottes et de courgettes, dans un bouillon épicé à la tomate. Servi avec des quartiers d'œuf dur.",
-      prix: 12.00,
-      image: "assets/images/Repas/soupeauxpoischiche.jpeg",
     ),
   ];
 
@@ -97,7 +60,7 @@ class ListProduits extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Salades"),
+        title: const Text("Menu"),
         actions: [
           IconButton(
             icon: const Icon(Icons.shopping_cart),
@@ -110,79 +73,114 @@ class ListProduits extends StatelessWidget {
           ),
         ],
       ),
-      body: Padding(
+
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            // SECTION SALADES -----------------------------------------
+            const Text(
               "Salades Fraîches",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
+
             GridView.builder(
               itemCount: produits.length,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
-                crossAxisSpacing: 9,
+                crossAxisCount: 2, // 2 colonnes pour mobile
+                crossAxisSpacing: 12,
                 mainAxisSpacing: 20,
-                mainAxisExtent: 300,
-                //childAspectRatio: 0.7,
+                childAspectRatio: 0.70,
               ),
+
               itemBuilder: (context, index) {
                 final produit = produits[index];
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DetailsProduit(produit: produit),
-                      ),
-                    );
-                  },
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.asset(produit.image, fit: BoxFit.cover),
-                        ),
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        produit.nom,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
-                      ),
-                      Text(
-                        "${produit.prix} \$",
-                        style: const TextStyle(
-                          color: Colors.green,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.add_shopping_cart),
-                        onPressed: () {
-                          Panier.add(produit);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text("${produit.nom} ajouté au panier"),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                );
+                return _buildProduitCard(context, produit);
               },
             ),
+
+            const SizedBox(height: 20),
+
+            // SECTION REPAS -----------------------------------------
+            const Text(
+              "Repas Africains & Internationaux",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
+
+            GridView.builder(
+              itemCount: repas.length,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 12,
+                mainAxisSpacing: 20,
+                childAspectRatio: 0.70,
+              ),
+
+              itemBuilder: (context, index) {
+                final dish = repas[index];
+                return _buildProduitCard(context, dish);
+              },
+            ),
+
+            const SizedBox(height: 30),
           ],
         ),
+      ),
+    );
+  }
+
+  // WIDGET : Carte produit / repas réutilisable -------------------------------
+  Widget _buildProduitCard(BuildContext context, dynamic produit) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailsProduit(produit: produit),
+          ),
+        );
+      },
+      child: Column(
+        children: [
+          Expanded(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.asset(produit.image, fit: BoxFit.cover),
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            produit.nom,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          ),
+          Text(
+            "${produit.prix} \$",
+            style: const TextStyle(
+              color: Colors.green,
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.add_shopping_cart),
+            onPressed: () {
+              Panier.add(produit);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text("${produit.nom} ajouté au panier")),
+              );
+            },
+          ),
+        ],
       ),
     );
   }
