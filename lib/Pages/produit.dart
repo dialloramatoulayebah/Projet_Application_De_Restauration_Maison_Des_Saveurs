@@ -1,10 +1,23 @@
-class Produit {
+class Salade {
   final String nom;
   final String description;
   final double prix;
   final String image;
 
-  Produit({
+  Salade({
+    required this.nom,
+    required this.description,
+    required this.prix,
+    required this.image,
+  });
+}
+class Repas {
+  final String nom;
+  final String description;
+  final double prix;
+  final String image;
+
+  Repas({
     required this.nom,
     required this.description,
     required this.prix,
