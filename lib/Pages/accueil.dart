@@ -110,7 +110,9 @@ class AccueilPage extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ListProduits()),
+                        MaterialPageRoute(
+                          builder: (context) => ListProduits(produit: produit),
+                        ),
                       );
                     },
                     child: const Text(

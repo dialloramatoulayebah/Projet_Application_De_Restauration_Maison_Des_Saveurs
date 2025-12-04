@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'detail_menu.dart';
 import 'page_panier.dart';
 import 'panier.dart';
 import 'produit.dart';
 
 class ListProduits extends StatelessWidget {
-  ListProduits({super.key});
+  final Produit produit;
+  ListProduits({super.key, required this.produit});
 
   final List<Salade> produits = [
     Salade(
@@ -88,6 +88,43 @@ class ListProduits extends StatelessWidget {
           "Soupe ou ragoût nourrissant à base de pois chiches, de couscous perlé (Maftoul), de carottes et de courgettes, dans un bouillon épicé à la tomate. Servi avec des quartiers d'œuf dur.",
       prix: 12.00,
       image: "assets/images/Repas/soupeauxpoischiche.jpeg",
+    ),
+  ];
+  final List<Boisson> boissons = [
+    Boisson(
+      nom: "Jus de Bissap",
+      description:
+          "Boisson rafraîchissante à base de fleurs d’hibiscus, légèrement sucrée et acidulée, très populaire en Afrique de l’Ouest.",
+      prix: 3.50,
+      image: "assets/images/Boisson/bissa.jpg",
+    ),
+    Boisson(
+      nom: "Jus d’Ananas",
+      description:
+          "Jus naturel d’ananas frais, riche en vitamines et parfait pour une pause tropicale.",
+      prix: 4.00,
+      image: "assets/images/Boisson/jusananas.jpg",
+    ),
+    Boisson(
+      nom: "Jus de Baobab",
+      description:
+          "Boisson nutritive à base de pulpe de baobab, légèrement acidulée et riche en antioxydants.",
+      prix: 4.00,
+      image: "assets/images/Boisson/jusdebaobab.jpg",
+    ),
+    Boisson(
+      nom: "Jus de Citron",
+      description:
+          "Jus frais de citron, désaltérant et riche en vitamine C, idéal pour se rafraîchir.",
+      prix: 3.00,
+      image: "assets/images/Boisson/jusdecitron.jpg",
+    ),
+    Boisson(
+      nom: "Jus de Gingembre",
+      description:
+          "Boisson tonique à base de gingembre frais, légèrement piquante et énergisante.",
+      prix: 4.00,
+      image: "assets/images/Boisson/jusdegingembre.jpg",
     ),
   ];
 
@@ -174,6 +211,32 @@ class ListProduits extends StatelessWidget {
                 return _buildProduitCard(context, dish);
               },
             ),
+            const SizedBox(height: 20),
+
+            // SECTION BOISSONS -----------------------------------------
+            const Text(
+              "Savourez nos meilleures boissons",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
+
+            GridView.builder(
+              itemCount: boissons.length,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 4,
+                crossAxisSpacing: 12,
+                mainAxisSpacing: 20,
+                childAspectRatio: 1.00,
+              ),
+
+              itemBuilder: (context, index) {
+                final boisson = boissons[index];
+                return _buildProduitCard(context, boisson);
+              },
+            ),
 
             const SizedBox(height: 30),
           ],
@@ -183,13 +246,13 @@ class ListProduits extends StatelessWidget {
   }
 
   // WIDGET : Carte produit / repas réutilisable -------------------------------
-  Widget _buildProduitCard(BuildContext context, dynamic produit) {
+  Widget _buildProduitCard(BuildContext context, Produit produit) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => DetailsProduit(produit: produit),
+            builder: (context) => ListProduits(produit: produit),
           ),
         );
       },
@@ -208,7 +271,7 @@ class ListProduits extends StatelessWidget {
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
           ),
           Text(
-            "${produit.prix} \$",
+            "${produit.prix} CAD",
             style: const TextStyle(
               color: Colors.green,
               fontSize: 13,
