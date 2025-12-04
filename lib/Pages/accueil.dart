@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'detail_menu.dart';
+
 //import 'Icon.dart';
 
 class AccueilPage extends StatelessWidget {
@@ -111,7 +113,7 @@ class AccueilPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ListProduits(produit: produit),
+                          builder: (context) => ListProduits(),
                         ),
                       );
                     },
