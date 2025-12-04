@@ -1,3 +1,4 @@
+import 'package:app_de_restauration_maison_des_saveurs/Pages/detail_menu.dart';
 import 'package:flutter/material.dart';
 
 import 'page_panier.dart';
@@ -5,8 +6,7 @@ import 'panier.dart';
 import 'produit.dart';
 
 class ListProduits extends StatelessWidget {
-  final Produit produit;
-  ListProduits({super.key, required this.produit});
+  ListProduits({super.key});
 
   final List<Salade> produits = [
     Salade(
@@ -252,7 +252,7 @@ class ListProduits extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ListProduits(produit: produit),
+            builder: (context) => DetailsProduit(produit: produit),
           ),
         );
       },

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'produit.dart';
 
 class DetailsProduit extends StatelessWidget {
-  final Salade produit;
+  final Produit produit;
   const DetailsProduit({super.key, required this.produit});
 
   @override
