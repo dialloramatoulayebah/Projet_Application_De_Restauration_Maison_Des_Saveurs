@@ -96,7 +96,7 @@ class ListProduits extends StatelessWidget {
       description:
           "Boisson rafraîchissante à base de fleurs d’hibiscus, légèrement sucrée et acidulée, très populaire en Afrique de l’Ouest.",
       prix: 3.50,
-      image: "assets/images/Boisson/bissa.jpg",
+      image: "assets/images/Boisson/bissap.jpg",
     ),
     Boisson(
       nom: "Jus d’Ananas",
