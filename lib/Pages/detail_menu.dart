@@ -9,7 +9,7 @@ class DetailsProduit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //appBar: AppBar(title: Text(produit.nom)),
+      appBar: AppBar(title: Text(produit.nom)),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
