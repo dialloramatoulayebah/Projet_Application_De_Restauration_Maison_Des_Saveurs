@@ -25,10 +25,11 @@ class _PagePaiementState extends State<PagePaiement> {
             Text("${Panier.total()} \$",
                 style: TextStyle(fontSize: 22, color: Colors.green)),
             SizedBox(height: 25),
-            Text("Méthode de paiement",
+            Text("Comment souhaitez-vous payer",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             RadioListTile(
-              title: Text("Carte bancaire"),
+              title: Text("Credit ou débit"),
+              
               value: "carte",
               groupValue: methodePaiement,
               onChanged: (value) => setState(() => methodePaiement = value),
