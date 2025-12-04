@@ -124,7 +124,7 @@ class ListProduits extends StatelessWidget {
       description:
           "Boisson tonique à base de gingembre frais, légèrement piquante et énergisante.",
       prix: 4.00,
-      image: "assets/images/Boisson/jusdegingembre.jpg",
+      image: "assets/images/Boisson/jusgingembre.jpeg",
     ),
   ];
 
