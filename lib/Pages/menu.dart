@@ -46,13 +46,48 @@ class ListProduits extends StatelessWidget {
       nom: "Attiéké Poisson",
       description: "Attiéké ivoirien et poisson braisé.",
       prix: 17.00,
-      image: "assets/images/Repas/attiekepoisssson.jpg",
+      image: "assets/images/Repas/attiekepoissson.jpg",
     ),
     Repas(
       nom: "Tajine Marocain aux Pruneaux",
       description: "Tajine marocain traditionnel.",
       prix: 20.00,
       image: "assets/images/Repas/tajine-marocain-aux-pruneaux.jpg",
+    ),
+    Repas(
+      nom: "Tajine Marocain Traditionnel",
+      description:
+          "Tajine aux légumes variés, épices marocaines et viande tendre cuite lentement.",
+      prix: 18.00,
+      image: "assets/images/Repas/tajine-traditionnel-marocain.jpeg",
+    ),
+    Repas(
+      nom: "Brochettes Grillées",
+      description:
+          "Brochettes de viande marinée, grillées au feu et servies avec une sauce épicée.",
+      prix: 15.00,
+      image: "assets/images/Repas/Brochette.jpeg",
+    ),
+    Repas(
+      nom: "Riz Sauce Arachide",
+      description:
+          "Riz blanc accompagné d’une sauce onctueuse à base d’arachide et de viande mijotée.",
+      prix: 14.00,
+      image: "assets/images/Repas/rizsaucearachide.jpeg",
+    ),
+    Repas(
+      nom: "chièp (Thieboudienne)",
+      description:
+          "Riz sénégalais parfumé, servi avec poisson, carottes, chou et légumes mijotés.",
+      prix: 19.00,
+      image: "assets/images/Repas/Tchiep.jpg",
+    ),
+    Repas(
+      nom: "Salade poulet braisé",
+      description:
+          "Soupe ou ragoût nourrissant à base de pois chiches, de couscous perlé (Maftoul), de carottes et de courgettes, dans un bouillon épicé à la tomate. Servi avec des quartiers d'œuf dur.",
+      prix: 12.00,
+      image: "assets/images/Repas/soupeauxpoischiche.jpeg",
     ),
   ];
 
@@ -75,14 +110,23 @@ class ListProduits extends StatelessWidget {
       ),
 
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(10),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          //crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // SECTION SALADES -----------------------------------------
             const Text(
+              "Découvrez nos délicieus plats préparés avec soin ! et cliquez sur un plat pour voir les détails.",
+              style: TextStyle(fontSize: 16, fontFamily: 'Poppins'),
+              textAlign: TextAlign.center,
+            ),
+            const Text(
               "Salades Fraîches",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Poppins',
+              ),
             ),
             const SizedBox(height: 10),
 
@@ -92,10 +136,10 @@ class ListProduits extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
 
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, // 2 colonnes pour mobile
+                crossAxisCount: 4, // 4 colonnes pour desktop
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 20,
-                childAspectRatio: 0.70,
+                childAspectRatio: 1.00,
               ),
 
               itemBuilder: (context, index) {
@@ -119,10 +163,10 @@ class ListProduits extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
 
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
+                crossAxisCount: 4,
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 20,
-                childAspectRatio: 0.70,
+                childAspectRatio: 1.00,
               ),
 
               itemBuilder: (context, index) {
