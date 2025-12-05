@@ -25,27 +25,63 @@ class _PagePaiementState extends State<PagePaiement> {
             Text("${Panier.total()} \$",
                 style: TextStyle(fontSize: 22, color: Colors.green)),
             SizedBox(height: 25),
-            Text("Méthode de paiement",
+            
+            Text("Comment souhaitez-vous payer",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+
+            // ------------------ Option Carte ------------------
             RadioListTile(
-              title: Text("Carte bancaire"),
+              title: Text("Crédit ou Débit"),
               value: "carte",
               groupValue: methodePaiement,
               onChanged: (value) => setState(() => methodePaiement = value),
             ),
+
+            // 📌 TON CONTAINER AVEC VISA / MASTERCARD
+            if (methodePaiement == "carte")
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  children: [
+                    const Expanded(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: "Numéro",
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 25, child: Image.asset("assets/images/visa.jpg")),
+                    const SizedBox(width: 6),
+                    SizedBox(height: 25, child: Image.asset("assets/images/mastercard.jpg")),
+                  ],
+                ),
+              ),
+
+            SizedBox(height: 15),
+
+            // ------------------ Option PayPal ------------------
             RadioListTile(
               title: Text("PayPal"),
               value: "paypal",
               groupValue: methodePaiement,
               onChanged: (value) => setState(() => methodePaiement = value),
             ),
+
+            // ------------------ Option Cash ------------------
             RadioListTile(
               title: Text("Paiement cash"),
               value: "cash",
               groupValue: methodePaiement,
               onChanged: (value) => setState(() => methodePaiement = value),
             ),
+
             SizedBox(height: 20),
+
             Center(
               child: ElevatedButton(
                 onPressed: methodePaiement == null
