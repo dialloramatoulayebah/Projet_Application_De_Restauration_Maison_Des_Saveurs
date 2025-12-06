@@ -23,4 +23,8 @@ class Panier {
   static void clear() {
     _items.clear();
   }
+
+  static int count() {
+    return items.length;
+  }
 }

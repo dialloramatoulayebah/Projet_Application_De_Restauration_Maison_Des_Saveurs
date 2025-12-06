@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/menu_item.dart';
 import '../models/panier.dart';
+import '../widgets/cart_icon.dart';
 
 class DetailsProduit extends StatefulWidget {
   final MenuItem item;
@@ -16,7 +17,16 @@ class _DetailsProduitState extends State<DetailsProduit> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.item.titre)),
+      appBar: AppBar(
+        title: Text(widget.item.titre),
+        actions: [
+          CartIcon(
+            onPressed: () {
+              // Open a cart page later if needed
+            },
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
