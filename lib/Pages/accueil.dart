@@ -2,10 +2,158 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../models/menu_item.dart';
+import '../models/panier.dart';
+import '../services/api_service.dart';
 import 'menuPage.dart';
 
-class AccueilPage extends StatelessWidget {
+class AccueilPage extends StatefulWidget {
   const AccueilPage({super.key});
+
+  @override
+  _AccueilPageState createState() => _AccueilPageState();
+}
+
+class _AccueilPageState extends State<AccueilPage> {
+  bool _showChat = false;
+  final TextEditingController _chatController = TextEditingController();
+  final List<Widget> _messages = [];
+  final ScrollController _scrollController = ScrollController();
+
+  late Future<List<MenuItem>> _futureMenu;
+
+  @override
+  void initState() {
+    super.initState();
+    _futureMenu = ApiService.getMenu();
+  }
+
+  void _sendMessage(List<MenuItem> menuItems) {
+    final text = _chatController.text.trim();
+    if (text.isEmpty) return;
+
+    // Add user message
+    _messages.add(_buildUserMessage(text));
+    _chatController.clear();
+
+    // Add bot response immediately
+    final responseWidgets = _getBotResponseWidgets(text, menuItems);
+    _messages.addAll(responseWidgets);
+
+    // Refresh UI once
+    setState(() {});
+
+    // Scroll to bottom
+    Future.delayed(const Duration(milliseconds: 100), () {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeOut,
+      );
+    });
+  }
+
+  Widget _buildUserMessage(String text) {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 2),
+        padding: const EdgeInsets.all(6),
+        decoration: BoxDecoration(
+          color: Colors.green.shade200,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Text(text),
+      ),
+    );
+  }
+
+  Widget _buildBotMessage(String text) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 2),
+        padding: const EdgeInsets.all(6),
+        decoration: BoxDecoration(
+          color: Colors.grey.shade200,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Text(text),
+      ),
+    );
+  }
+
+  List<Widget> _getBotResponseWidgets(
+    String userMessage,
+    List<MenuItem> menuItems,
+  ) {
+    userMessage = userMessage.toLowerCase();
+    final widgets = <Widget>[];
+
+    // Check menu items match
+    final matches = menuItems
+        .where((item) => item.titre.toLowerCase().contains(userMessage))
+        .toList();
+
+    if (matches.isNotEmpty) {
+      widgets.add(_buildBotMessage("Voici ce que j'ai trouvé :"));
+      widgets.add(
+        Wrap(
+          spacing: 6,
+          runSpacing: 4,
+          children: matches.map((item) {
+            return ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.orangeAccent,
+              ),
+              onPressed: () {
+                Panier.add(item);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("${item.titre} ajouté au panier"),
+                    duration: const Duration(seconds: 2),
+                  ),
+                );
+              },
+              child: Text(item.titre),
+            );
+          }).toList(),
+        ),
+      );
+    } else if (userMessage.contains("salade")) {
+      widgets.add(
+        _buildBotMessage(
+          "Nous avons plusieurs salades fraîches: Salade Niçoise, Salade César, etc.",
+        ),
+      );
+    } else if (userMessage.contains("repas")) {
+      widgets.add(
+        _buildBotMessage(
+          "Nos repas incluent Poulet Yassa, Couscous, Tiep Bou Dien, etc.",
+        ),
+      );
+    } else if (userMessage.contains("boisson")) {
+      widgets.add(
+        _buildBotMessage(
+          "Nous avons des jus, sodas et boissons traditionnelles africaines.",
+        ),
+      );
+    } else if (userMessage.contains("prix")) {
+      widgets.add(
+        _buildBotMessage(
+          "Les prix varient selon le plat, généralement entre 5 et 20 CAD.",
+        ),
+      );
+    } else {
+      widgets.add(
+        _buildBotMessage(
+          "Je suis désolé, pouvez-vous préciser votre question sur nos plats ?",
+        ),
+      );
+    }
+
+    return widgets;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +175,7 @@ class AccueilPage extends StatelessWidget {
           // Background image
           Image.asset("assets/images/accueil_1.jpeg", fit: BoxFit.cover),
 
-          // Overlay to darken background for better readability
-          Container(color: Colors.black.withOpacity(0.3)),
-
-          // Content over the image
+          // Main content
           SingleChildScrollView(
             child: Center(
               child: Column(
@@ -43,26 +188,13 @@ class AccueilPage extends StatelessWidget {
                     height: 200,
                   ),
                   const SizedBox(height: 20),
-
-                  // Welcome text
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 8,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.4),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: const Text(
-                      "Bienvenue à la Maison des Saveurs!",
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                      textAlign: TextAlign.center,
+                  const Text(
+                    "Bienvenue à la Maison des Saveurs!",
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -96,11 +228,8 @@ class AccueilPage extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.orangeAccent,
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 40,
-                        vertical: 16,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        vertical: 12,
+                        horizontal: 24,
                       ),
                     ),
                     child: const Text(
@@ -108,63 +237,139 @@ class AccueilPage extends StatelessWidget {
                       style: TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: 18,
-                        fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 30),
 
-                  // Social buttons under the menu button
+                  const SizedBox(height: 20),
+
+                  // Social buttons
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ElevatedButton(
+                      IconButton(
                         onPressed: () => openURL("https://www.google.com"),
-                        style: ElevatedButton.styleFrom(
-                          shape: const CircleBorder(),
-                          padding: const EdgeInsets.all(16),
-                          backgroundColor: Colors.white70,
-                        ),
-                        child: const FaIcon(
+                        icon: const FaIcon(
                           FontAwesomeIcons.google,
                           color: Colors.red,
-                          size: 24,
                         ),
                       ),
-                      const SizedBox(width: 16),
-                      ElevatedButton(
+                      IconButton(
                         onPressed: () => openURL("https://www.facebook.com"),
-                        style: ElevatedButton.styleFrom(
-                          shape: const CircleBorder(),
-                          padding: const EdgeInsets.all(16),
-                          backgroundColor: Colors.white70,
-                        ),
-                        child: const FaIcon(
+                        icon: const FaIcon(
                           FontAwesomeIcons.facebook,
                           color: Colors.blue,
-                          size: 24,
                         ),
                       ),
-                      const SizedBox(width: 16),
-                      ElevatedButton(
+                      IconButton(
                         onPressed: () => openURL("https://www.instagram.com"),
-                        style: ElevatedButton.styleFrom(
-                          shape: const CircleBorder(),
-                          padding: const EdgeInsets.all(16),
-                          backgroundColor: Colors.white70,
-                        ),
-                        child: const FaIcon(
+                        icon: const FaIcon(
                           FontAwesomeIcons.instagram,
                           color: Colors.pink,
-                          size: 24,
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 40),
                 ],
               ),
+            ),
+          ),
+
+          // Chat Bot
+          Positioned(
+            bottom: 20,
+            right: 20,
+            child: FutureBuilder<List<MenuItem>>(
+              future: _futureMenu,
+              builder: (context, snapshot) {
+                final menuItems = snapshot.hasData
+                    ? snapshot.data!
+                    : <MenuItem>[];
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (_showChat)
+                      Container(
+                        width: 300,
+                        height: 350,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.black26,
+                              blurRadius: 6,
+                              offset: Offset(2, 2),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: Colors.green,
+                                borderRadius: const BorderRadius.vertical(
+                                  top: Radius.circular(12),
+                                ),
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  "Chat Bot",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: ListView(
+                                controller: _scrollController,
+                                padding: const EdgeInsets.all(8),
+                                children: _messages,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: TextField(
+                                      controller: _chatController,
+                                      decoration: const InputDecoration(
+                                        hintText: "Écrivez un message...",
+                                        isDense: true,
+                                        border: OutlineInputBorder(),
+                                      ),
+                                      onSubmitted: (_) =>
+                                          _sendMessage(menuItems),
+                                    ),
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.send),
+                                    onPressed: () => _sendMessage(menuItems),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    FloatingActionButton(
+                      mini: true,
+                      backgroundColor: Colors.green,
+                      onPressed: () {
+                        setState(() {
+                          _showChat = !_showChat;
+                        });
+                      },
+                      child: Icon(_showChat ? Icons.close : Icons.chat),
+                    ),
+                  ],
+                );
+              },
             ),
           ),
         ],
