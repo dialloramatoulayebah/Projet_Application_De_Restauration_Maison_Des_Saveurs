@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/menu_item.dart';
 import '../models/panier.dart';
+import 'page_payment.dart'; // import your PaymentPage
 
 class PagePanier extends StatefulWidget {
   const PagePanier({super.key});
@@ -131,6 +132,18 @@ class _PagePanierState extends State<PagePanier> {
             },
             style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
             child: const Text("Vider le panier"),
+          ),
+          const SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              // Navigate to PaymentPage for simulated payment
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const PaymentPage()),
+              );
+            },
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+            child: const Text("Payer"),
           ),
         ],
       ),
