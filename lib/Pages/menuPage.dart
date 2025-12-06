@@ -14,6 +14,9 @@ class MenuPage extends StatefulWidget {
 class _MenuPageState extends State<MenuPage> {
   late Future<List<MenuItem>> _futureMenu;
 
+  // Hover state per item
+  final Map<MenuItem, bool> _hovered = {};
+
   // Hardcoded category IDs (replace with real IDs from MongoDB)
   final String saladeCat = "69330ba0447f950ce6730f78";
   final String repasCat = "69330ba0447f950ce6730f79";
@@ -134,11 +137,11 @@ class _MenuPageState extends State<MenuPage> {
   }
 
   Widget _buildCard(MenuItem item) {
-    double scale = 1.0;
+    bool isHovered = _hovered[item] ?? false;
 
     return MouseRegion(
-      onEnter: (_) => setState(() => scale = 1.05),
-      onExit: (_) => setState(() => scale = 1.0),
+      onEnter: (_) => setState(() => _hovered[item] = true),
+      onExit: (_) => setState(() => _hovered[item] = false),
       child: GestureDetector(
         onTap: () {
           Navigator.push(
@@ -147,7 +150,7 @@ class _MenuPageState extends State<MenuPage> {
           ).then((_) => setState(() {})); // refresh top-right cart
         },
         child: AnimatedScale(
-          scale: scale,
+          scale: isHovered ? 1.05 : 1.0,
           duration: const Duration(milliseconds: 200),
           curve: Curves.easeInOut,
           child: Container(
@@ -155,16 +158,16 @@ class _MenuPageState extends State<MenuPage> {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(12),
-              boxShadow: const [
+              boxShadow: [
                 BoxShadow(
                   color: Colors.black26,
-                  blurRadius: 6,
-                  offset: Offset(2, 2),
+                  blurRadius: isHovered ? 12 : 6,
+                  offset: Offset(isHovered ? 4 : 2, isHovered ? 4 : 2),
                 ),
                 BoxShadow(
                   color: Colors.black12,
-                  blurRadius: 4,
-                  offset: Offset(-2, -2),
+                  blurRadius: isHovered ? 6 : 4,
+                  offset: Offset(isHovered ? -4 : -2, isHovered ? -4 : -2),
                 ),
               ],
             ),

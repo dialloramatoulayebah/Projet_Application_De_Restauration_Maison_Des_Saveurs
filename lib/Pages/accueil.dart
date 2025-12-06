@@ -27,6 +27,9 @@ class AccueilPage extends StatelessWidget {
           // Background image
           Image.asset("assets/images/accueil_1.jpeg", fit: BoxFit.cover),
 
+          // Overlay to darken background for better readability
+          Container(color: Colors.black.withOpacity(0.3)),
+
           // Content over the image
           SingleChildScrollView(
             child: Center(
@@ -40,13 +43,26 @@ class AccueilPage extends StatelessWidget {
                     height: 200,
                   ),
                   const SizedBox(height: 20),
-                  const Text(
-                    "Bienvenue à la Maison des Saveurs!",
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+
+                  // Welcome text
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.4),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Text(
+                      "Bienvenue à la Maison des Saveurs!",
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -67,35 +83,9 @@ class AccueilPage extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
-                  const SizedBox(height: 20),
-
-                  // Social buttons
-                  ElevatedButton(
-                    onPressed: () => openURL("https://www.google.com"),
-                    child: const FaIcon(
-                      FontAwesomeIcons.google,
-                      color: Colors.red,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  ElevatedButton(
-                    onPressed: () => openURL("https://www.facebook.com"),
-                    child: const FaIcon(
-                      FontAwesomeIcons.facebook,
-                      color: Colors.blue,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  ElevatedButton(
-                    onPressed: () => openURL("https://www.instagram.com"),
-                    child: const FaIcon(
-                      FontAwesomeIcons.instagram,
-                      color: Colors.pink,
-                    ),
-                  ),
                   const SizedBox(height: 30),
 
-                  // Navigate to MenuPage (connected to Flask backend)
+                  // Navigate to MenuPage
                   ElevatedButton(
                     onPressed: () {
                       Navigator.push(
@@ -103,14 +93,76 @@ class AccueilPage extends StatelessWidget {
                         MaterialPageRoute(builder: (context) => MenuPage()),
                       );
                     },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.orangeAccent,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 40,
+                        vertical: 16,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
                     child: const Text(
                       "Aller au Menu",
                       style: TextStyle(
                         fontFamily: 'Poppins',
-                        color: Colors.orangeAccent,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
                     ),
                   ),
+                  const SizedBox(height: 30),
+
+                  // Social buttons under the menu button
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () => openURL("https://www.google.com"),
+                        style: ElevatedButton.styleFrom(
+                          shape: const CircleBorder(),
+                          padding: const EdgeInsets.all(16),
+                          backgroundColor: Colors.white70,
+                        ),
+                        child: const FaIcon(
+                          FontAwesomeIcons.google,
+                          color: Colors.red,
+                          size: 24,
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      ElevatedButton(
+                        onPressed: () => openURL("https://www.facebook.com"),
+                        style: ElevatedButton.styleFrom(
+                          shape: const CircleBorder(),
+                          padding: const EdgeInsets.all(16),
+                          backgroundColor: Colors.white70,
+                        ),
+                        child: const FaIcon(
+                          FontAwesomeIcons.facebook,
+                          color: Colors.blue,
+                          size: 24,
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      ElevatedButton(
+                        onPressed: () => openURL("https://www.instagram.com"),
+                        style: ElevatedButton.styleFrom(
+                          shape: const CircleBorder(),
+                          padding: const EdgeInsets.all(16),
+                          backgroundColor: Colors.white70,
+                        ),
+                        child: const FaIcon(
+                          FontAwesomeIcons.instagram,
+                          color: Colors.pink,
+                          size: 24,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 40),
                 ],
               ),
             ),
